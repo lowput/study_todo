@@ -1,19 +1,21 @@
 var mainController = function($scope, $http) {
-    $scope.tasks = [];
     $scope.newTaskBody = "";
 
     var pushTask = function(task) {
         $scope.tasks.push({"id": task.id, "body": task.body, "done": task.done});
     };
 
-    $http({
-        method: 'GET',
-        url: '/all'
-    }).then(function onSuccess(response) {
-        angular.forEach(response.data, function(task) {
-            pushTask(task);
+    var getAll = function() {
+        $scope.tasks = [];
+        $http({
+            method: 'GET',
+            url: '/all'
+        }).then(function onSuccess(response) {
+            angular.forEach(response.data, function(task) {
+                pushTask(task);
+            });
         });
-    });
+    }
 
     $scope.getDoneCount = function() {
         var count = 0;
@@ -42,17 +44,15 @@ var mainController = function($scope, $http) {
     };
 
     $scope.deleteDone = function() {
-        var oldTasks = $scope.tasks;
-        $scope.tasks = [];
-        angular.forEach(oldTasks, function(task) {
-            if(!task.done) pushTask(task);
-        });
         $http.post('/delete/done');
+        getAll();
     }
 
     $scope.isTaskBodyEmpty = function() {
         return $scope.newTaskBody.length == 0;
     }
+
+    getAll();
 };
 
 angular.module('myapp', [])
