@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="jp" ng-app="myapp">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="/js/controller.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .done-true {
+            color: gray;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Todo List</h1>
+        </div>
+        <div ng-controller="MainController">
+            <div class="btn-group">
+                <button class="btn btn-default active">
+                    合計
+                    <span class="badge">{{tasks.length}}</span>
+                </button>
+                <button class="btn btn-default">
+                    未了
+                    <span class="badge">{{tasks.length - getDoneCount()}}</span>
+                </button>
+                <button class="btn btn-default">
+                    完了
+                    <span class="badge">{{getDoneCount()}}</span>
+                </button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-danger" ng-click="deleteDone()">Delete Finished</button>
+            </div>
+            <hr>
+            <ul class="list-unstyled">
+                <li ng-repeat="task in tasks">
+                    <form class="input-group input-group-lg" ng-click="update(task)">
+                        <label class="input-group-addon">
+                            <input type="checkbox" ng-model="task.done">
+                        </label>
+                        <p class="form-control input-lg done-{{task.done}}">{{task.body}}</p>
+                    </form>
+                </li>
+            </ul>
+            <hr>
+            <form class="input-group input-group-lg" ng-submit="addNew()">
+                <input class="form-control input-lg" type="text" ng-model="newTaskBody">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" ng-disabled="isTaskBodyEmpty()">
+                        追加
+                    </button>
+                </span>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
