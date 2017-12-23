@@ -1,7 +1,7 @@
 # study_todo
 
 お勉強の為のTodoアプリです。
-AngulerJS, Sinatra, ActiveRecord あたりを使っています。DBはSQLite3 です。
+AngularJS, Sinatra, ActiveRecord あたりを使っています。DBはSQLite3 です。
 
 ## インストールと実行
 
